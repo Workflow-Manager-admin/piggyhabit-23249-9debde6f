@@ -65,7 +65,94 @@
   min-height: 30px;
 }
 
-/* Placeholder for future PiggyHabit feature styles */
+/* Add-on PiggyHabit custom styles */
+
+/* Piggy bank icon */
+.logo-symbol svg {
+  display: block;
+  margin: 0;
+}
+
+/* Progress bar (goal) styles handled inline for progress, for subtle shadow/color change use below if needed */
+.piggy-progress-bar {
+  width: 280px;
+  max-width: 90vw;
+  background: #ffe7af;
+  border-radius: 14px;
+  height: 22px;
+  position: relative;
+  box-shadow: 0 1.5px 8px 0 rgba(255, 179, 0, 0.10);
+  border: 1.5px solid var(--piggy-primary);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.piggy-progress-bar-inner {
+  background: linear-gradient(90deg, var(--piggy-accent), var(--piggy-primary));
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.8s cubic-bezier(.52,.01,.38,1.08);
+}
+
+/* Goal input and edit styles */
+.piggy-goal input[type="number"] {
+  border: 1px solid var(--piggy-accent);
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 2px 8px;
+  height: 28px;
+  background: #fffefa;
+  outline: none;
+}
+
+/* Add/Remove Controls */
+.piggy-add-remove-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 20px 0;
+}
+.piggy-add-remove-controls input[type="number"] {
+  max-width: 120px;
+  border: 1.3px solid var(--piggy-accent);
+  border-radius: 8px;
+  font-size: 18px;
+  padding: 5px 12px;
+  height: 36px;
+  outline: none;
+  background: #fffefa;
+}
+
+/* Add/Remove button extra tweaks */
+.piggy-add-btn {
+  background: var(--piggy-primary);
+  color: var(--piggy-accent);
+  font-weight: 700;
+  border: 1.3px solid #FFD160;
+  border-radius: 8px;
+}
+.piggy-remove-btn {
+  background: #fff3e0;
+  color: var(--piggy-accent);
+  font-weight: 600;
+  border: 1.2px solid #FFCE7C;
+  border-radius: 8px;
+}
+
+/* Shrink the amount on small screens */
+@media (max-width: 480px) {
+  .piggy-balance {
+    font-size: 1.5rem;
+    padding: 20px 10px;
+  }
+  .piggy-goal, .piggy-history, .piggy-progress-bar {
+    font-size: 1rem;
+    max-width: 95vw;
+    padding: 10px;
+  }
+}
+
 
 body {
   margin: 0;
