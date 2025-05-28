@@ -96,10 +96,23 @@ function PiggyHabitContainer() {
   // Handler to set a new goal
   const [editGoal, setEditGoal] = useState(false);
   const [goalInput, setGoalInput] = useState(goal);
+  const [goalError, setGoalError] = useState('');
 
+  // PUBLIC_INTERFACE
   const handleGoalSave = () => {
-    if (goalInput > 0) setGoal(goalInput);
+    // Defensive: goalInput could be string if user clears field
+    let parsedGoal = typeof goalInput === "number" ? goalInput : parseFloat(goalInput);
+    if (isNaN(parsedGoal) || parsedGoal <= 0) {
+      setGoalError("Enter a valid positive goal");
+      return;
+    }
+    if (parsedGoal > 10_000_000) {
+      setGoalError("That goal is too high!");
+      return;
+    }
+    setGoal(parsedGoal);
     setEditGoal(false);
+    setGoalError('');
   };
 
   return (
@@ -204,36 +217,46 @@ function PiggyHabitContainer() {
       </div>
 
       {/* Add/Remove Savings section */}
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 12, margin: "10px 0 20px 0" }}>
-        <input
-          type="number"
-          min="0.01"
-          step="0.01"
-          placeholder="Enter amount"
-          style={{
-            maxWidth: 120,
-            border: "1.3px solid var(--piggy-accent)",
-            borderRadius: 8,
-            fontSize: 18,
-            padding: "5px 12px",
-            height: 36,
-            outline: "none",
-            background: "#fffefa"
-          }}
-          value={inputAmount}
-          onChange={e => setInputAmount(e.target.value)}
-          onKeyDown={e => { if (e.key === "Enter") handleAdd(); }}
-        />
-        <button
-          className="btn btn-large"
-          style={{ background: "var(--piggy-primary)", color: "var(--piggy-accent)", fontWeight: 700, border: "1.3px solid #FFD160", borderRadius: 8 }}
-          onClick={handleAdd}
-        >+ Add</button>
-        <button
-          className="btn btn-large"
-          style={{ background: "#fff3e0", color: "var(--piggy-accent)", fontWeight: 600, border: "1.2px solid #FFCE7C", borderRadius: 8 }}
-          onClick={handleRemove}
-        >- Remove</button>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "stretch", maxWidth: 350, width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 12, margin: "10px 0 10px 0" }}>
+          <input
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="Enter amount"
+            style={{
+              maxWidth: 120,
+              border: "1.3px solid var(--piggy-accent)",
+              borderRadius: 8,
+              fontSize: 18,
+              padding: "5px 12px",
+              height: 36,
+              outline: "none",
+              background: "#fffefa"
+            }}
+            value={inputAmount}
+            onChange={e => { setInputAmount(e.target.value); if (inputError) setInputError(''); }}
+            onKeyDown={e => { if (e.key === "Enter") handleAdd(); }}
+            aria-label="Saving amount"
+          />
+          <button
+            className="btn btn-large"
+            style={{ background: "var(--piggy-primary)", color: "var(--piggy-accent)", fontWeight: 700, border: "1.3px solid #FFD160", borderRadius: 8 }}
+            onClick={handleAdd}
+            aria-label="Add savings"
+          >+ Add</button>
+          <button
+            className="btn btn-large"
+            style={{ background: "#fff3e0", color: "var(--piggy-accent)", fontWeight: 600, border: "1.2px solid #FFCE7C", borderRadius: 8 }}
+            onClick={handleRemove}
+            aria-label="Remove savings"
+          >- Remove</button>
+        </div>
+        {inputError && (
+          <div style={{color: "var(--piggy-accent)", fontSize: 14, fontStyle: "italic", minHeight: 17, marginTop: 0, marginBottom: 8}}>
+            {inputError}
+          </div>
+        )}
       </div>
 
       {/* --- Bottom Tab Section: History & Motivation --- */}
