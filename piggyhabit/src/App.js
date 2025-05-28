@@ -148,9 +148,9 @@ function PiggyHabitContainer() {
       </div>
 
       {/* Savings goal with edit */}
-      <div className="piggy-goal" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <div className="piggy-goal" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 7, minWidth: 180 }}>
         {editGoal ? (
-          <>
+          <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: 12}}>
             <input
               type="number"
               min="1"
@@ -164,19 +164,27 @@ function PiggyHabitContainer() {
                 padding: "2px 8px",
                 height: 28,
               }}
-              onChange={e => setGoalInput(Number(e.target.value))}
+              onChange={e => { setGoalInput(e.target.value); if (goalError) setGoalError(''); }}
               onKeyDown={e => { if (e.key === "Enter") handleGoalSave(); }}
+              aria-label="Goal amount"
             />
             <button className="btn" style={{ fontSize: 15, padding: "5px 12px" }} onClick={handleGoalSave}>Save</button>
-            <button className="btn" style={{ background: "transparent", color: "var(--piggy-accent)", border: "none", padding: "3px", boxShadow: "none" }} onClick={() => setEditGoal(false)}>✕</button>
-          </>
+            <button className="btn" style={{ background: "transparent", color: "var(--piggy-accent)", border: "none", padding: "3px", boxShadow: "none" }} onClick={() => { setEditGoal(false); setGoalError(''); }}>✕</button>
+          </div>
         ) : (
-          <>
+          <div style={{display: "flex", alignItems: "center", gap: 12}}>
             Goal: ${goal.toFixed(2)}
-            <button className="btn" style={{ fontSize: 15, padding: "5px 10px", marginLeft: 10, background: "#FFF8E1", color: "var(--piggy-accent)", border: "1px solid var(--piggy-accent)" }}
-              onClick={() => { setGoalInput(goal); setEditGoal(true); }}
-              title="Edit goal">✏️</button>
-          </>
+            <button className="btn"
+              style={{ fontSize: 15, padding: "5px 10px", marginLeft: 10, background: "#FFF8E1", color: "var(--piggy-accent)", border: "1px solid var(--piggy-accent)" }}
+              onClick={() => { setGoalInput(goal); setEditGoal(true); setGoalError(''); }}
+              title="Edit goal"
+            >✏️</button>
+          </div>
+        )}
+        {goalError && (
+          <div style={{color: "var(--piggy-accent)", fontSize: 13, fontStyle: "italic", minHeight: 15, marginLeft: 2}}>
+            {goalError}
+          </div>
         )}
       </div>
 
@@ -296,15 +304,15 @@ function PiggyHabitContainer() {
                 title="Show another motivational message"
                 className="piggy-motivation-next-btn"
                 onClick={() => {
-                  // Optionally randomize (or next)
-                  let nextIdx = (motivationIndex + 1) % motivationalMessages.length;
-                  // Make sure the next motivation is different if possible
-                  if (motivationalMessages.length > 1) {
-                    while (nextIdx === motivationIndex) {
-                      nextIdx = Math.floor(Math.random() * motivationalMessages.length);
-                    }
+                  // Always show a message different from the current one if possible
+                  if (motivationalMessages.length <= 1) {
+                    setMotivationIndex(0);
+                  } else {
+                    let possibleIndices = motivationalMessages.map((_, i) => i).filter(i => i !== motivationIndex);
+                    // Randomize for variety
+                    const nextIdx = possibleIndices[Math.floor(Math.random() * possibleIndices.length)];
+                    setMotivationIndex(nextIdx);
                   }
-                  setMotivationIndex(nextIdx);
                 }}
               >⟳</button>
             </div>
