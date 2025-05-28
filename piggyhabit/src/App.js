@@ -217,53 +217,58 @@ function PiggyHabitContainer() {
         >- Remove</button>
       </div>
 
-      {/* History Display */}
-      <div className="piggy-history">
-        <strong>Savings History</strong>
-        <ul style={{ margin: '14px 0 0 0', padding: 0, listStyle: "none" }}>
-          {history.length === 0 ? (
-            <li style={{ color: "#bbb", fontStyle: "italic" }}>No savings yet.</li>
-          ) : (
-            history.slice().reverse().map((entry, idx) => (
-              <li key={idx} style={{
-                color: entry.type === "add" ? "var(--piggy-accent)" : "#999",
-                fontWeight: entry.type === "add" ? 600 : 400,
-                fontSize: 15,
-                marginBottom: 2,
-                letterSpacing: entry.type === "add" ? "0.06em" : "0"
-              }}>
-                {entry.type === "add" ? "+" : "-"}${entry.amount.toFixed(2)}
-                <span style={{
-                  marginLeft: 8,
-                  color: "#a7a7a7",
-                  fontSize: 12,
-                  fontStyle: "italic"
-                }}>{entry.date}</span>
-              </li>
-            ))
-          )}
-        </ul>
+      {/* --- Bottom Tab Section: History & Motivation --- */}
+      <div className="piggy-bottom-bar">
+        <div className="piggy-bottom-tab-list">
+          {/* Savings History Section */}
+          <div className="piggy-bottom-tab piggy-bottom-tab-history">
+            <div className="piggy-bottom-tab-title">Savings History</div>
+            <ul className="piggy-bottom-history-list">
+              {history.length === 0 ? (
+                <li className="piggy-bottom-history-empty">No savings yet.</li>
+              ) : (
+                history.slice().reverse().map((entry, idx) => (
+                  <li
+                    key={idx}
+                    className={
+                      entry.type === "add"
+                        ? "piggy-history-add"
+                        : "piggy-history-remove"
+                    }
+                  >
+                    {entry.type === "add" ? "+" : "-"}${entry.amount.toFixed(2)}
+                    <span className="piggy-history-date">
+                      {entry.date}
+                    </span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+          {/* Motivational Messages Section */}
+          <div className="piggy-bottom-tab piggy-bottom-tab-motivation">
+            <div className="piggy-bottom-tab-title">Motivation</div>
+            <div className="piggy-bottom-motivation-content">
+              <span>{motivationalMessages[motivationIndex]}</span>
+              <button
+                title="Show another motivational message"
+                className="piggy-motivation-next-btn"
+                onClick={() => {
+                  // Optionally randomize (or next)
+                  let nextIdx = (motivationIndex + 1) % motivationalMessages.length;
+                  // Make sure the next motivation is different if possible
+                  if (motivationalMessages.length > 1) {
+                    while (nextIdx === motivationIndex) {
+                      nextIdx = Math.floor(Math.random() * motivationalMessages.length);
+                    }
+                  }
+                  setMotivationIndex(nextIdx);
+                }}
+              >⟳</button>
+            </div>
+          </div>
+        </div>
       </div>
-
-      {/* Motivational message */}
-      <div className="piggy-motivation" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
-        <span style={{ flex: 1 }}>{motivationalMessages[motivationIndex]}</span>
-        <button
-          title="Next motivational message"
-          style={{
-            background: "none",
-            border: "none",
-            color: "var(--piggy-primary)",
-            fontSize: 20,
-            cursor: "pointer",
-            marginLeft: 4,
-            marginTop: -1
-          }}
-          onClick={nextMotivation}
-        >⟳</button>
-      </div>
-
-      {/* Placeholder for future feature components */}
     </div>
   );
 }
