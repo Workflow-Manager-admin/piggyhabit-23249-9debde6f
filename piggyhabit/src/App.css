@@ -65,6 +65,144 @@
   min-height: 30px;
 }
 
+/* Bottom Bar for History + Motivation Tab Section */
+.piggy-bottom-bar {
+  width: 100vw;
+  max-width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+  background: #fffdfa;
+  border-top: 1.5px solid #ffe7af;
+  box-shadow: 0 -1px 6px 0 rgba(230,81,0,0.08);
+  min-height: 68px;
+  padding: 0 0 3px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.piggy-bottom-tab-list {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.piggy-bottom-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  border-right: 1.5px solid #ffe7af;
+  padding: 14px 10px 8px 10px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 62px;
+}
+.piggy-bottom-tab:last-child {
+  border-right: none;
+}
+.piggy-bottom-tab-title {
+  color: var(--piggy-accent);
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.piggy-bottom-history-list {
+  margin: 0;
+  padding: 0 0 0 2px;
+  list-style: none;
+  font-size: 1rem;
+  min-height: 18px;
+  max-height: 62px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.piggy-bottom-history-empty {
+  color: #bbb;
+  font-style: italic;
+  font-size: 0.98em;
+}
+
+.piggy-history-add {
+  color: var(--piggy-accent);
+  font-weight: 600;
+  font-size: 0.99em;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.piggy-history-remove {
+  color: #a7a7a7;
+  font-weight: 400;
+  font-size: 0.97em;
+  margin-bottom: 2px;
+}
+.piggy-history-date {
+  margin-left: 8px;
+  color: #bbb;
+  font-size: 0.88em;
+  font-style: italic;
+}
+
+/* Motivation inside bar */
+.piggy-bottom-tab-motivation .piggy-bottom-motivation-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--piggy-primary);
+  min-height: 30px;
+  flex: 1 1 0;
+}
+.piggy-motivation-next-btn {
+  background: none;
+  border: none;
+  color: var(--piggy-primary);
+  font-size: 23px;
+  cursor: pointer;
+  margin: 0 0 0 6px;
+  line-height: 1;
+  vertical-align: middle;
+  padding: 1px 4px 0 4px;
+  border-radius: 3px;
+  transition: background 0.18s;
+}
+.piggy-motivation-next-btn:hover {
+  background: #ffe7af65;
+}
+
+@media (max-width: 580px) {
+  .piggy-bottom-bar {
+    min-height: 84px;
+    font-size: 98%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .piggy-bottom-tab-list {
+    max-width: 100vw;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .piggy-bottom-bar {
+    min-height: 104px;
+    font-size: 95%;
+    padding: 0 0 1px 0;
+  }
+  .piggy-bottom-tab {
+    padding: 9px 4px 6px 4px;
+    font-size: 0.99em;
+    min-height: 64px;
+  }
+}
+
 /* Add-on PiggyHabit custom styles */
 
 /* Piggy bank icon */
