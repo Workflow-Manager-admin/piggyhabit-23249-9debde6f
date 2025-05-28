@@ -37,38 +37,57 @@ function PiggyHabitContainer() {
   // Savings input state
   const [inputAmount, setInputAmount] = useState('');
 
+  // Input/validation error state
+  const [inputError, setInputError] = useState('');
+
   // Handler for adding savings
+  // PUBLIC_INTERFACE
   const handleAdd = () => {
     const amt = parseFloat(inputAmount);
-    if (isNaN(amt) || amt <= 0) return;
-    const newBalance = balance + amt;
-    setBalance(newBalance);
+    if (isNaN(amt) || amt <= 0) {
+      setInputError('Enter a valid positive amount');
+      return;
+    }
+    if (amt > 1_000_000) {
+      setInputError('That amount is too large!');
+      return;
+    }
+    setBalance(balance + amt);
     setHistory([
       ...history,
       {
         amount: amt,
         date: new Date().toISOString().slice(0, 10),
-        type: 'add'
-      }
+        type: "add",
+      },
     ]);
     setInputAmount('');
+    setInputError('');
   };
 
   // Handler for removing savings
+  // PUBLIC_INTERFACE
   const handleRemove = () => {
     const amt = parseFloat(inputAmount);
-    if (isNaN(amt) || amt <= 0) return;
-    const newBalance = Math.max(balance - amt, 0);
-    setBalance(newBalance);
+    if (isNaN(amt) || amt <= 0) {
+      setInputError('Enter a valid positive amount');
+      return;
+    }
+    if (amt > balance) {
+      setInputError('Remove amount exceeds your savings.');
+      return;
+    }
+    setBalance(Math.max(balance - amt, 0));
     setHistory([
       ...history,
       {
         amount: amt,
         date: new Date().toISOString().slice(0, 10),
-        type: 'remove'
-      }
+        type: "remove",
+      },
     ]);
     setInputAmount('');
+    setInputError('');
   };
 
   // Progress toward goal (0 - 1)
