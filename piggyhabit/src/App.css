@@ -4,7 +4,68 @@
   --text-color: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --border-color: rgba(255, 255, 255, 0.1);
+
+  /* PiggyHabit Brand */
+  --piggy-primary: #FFB300;
+  --piggy-secondary: #FFF8E1;
+  --piggy-accent: #E65100;
 }
+
+.piggyhabit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--piggy-secondary);
+  padding: 32px 0 0 0;
+}
+
+.piggy-balance {
+  background: var(--piggy-primary);
+  color: var(--piggy-accent);
+  font-size: 2.5rem;
+  font-weight: bold;
+  border-radius: 1em;
+  padding: 32px 48px;
+  margin-top: 56px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 18px 0 rgba(255, 179, 0, 0.12);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.piggy-goal {
+  margin: 18px 0 12px 0;
+  font-size: 1.25rem;
+  color: var(--piggy-accent);
+  font-weight: 500;
+  background: #ffb30012;
+  border-radius: 8px;
+  padding: 8px 20px;
+  letter-spacing: 0.4px;
+}
+
+.piggy-history {
+  background: #fff;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  min-height: 80px;
+  margin: 28px 0;
+  box-shadow: 0 2px 7px 0 rgba(230,81,0,0.10);
+  padding: 16px;
+}
+
+.piggy-motivation {
+  margin-top: 24px;
+  color: var(--piggy-primary);
+  font-size: 1.1rem;
+  font-style: italic;
+  text-align: center;
+  min-height: 30px;
+}
+
+/* Placeholder for future PiggyHabit feature styles */
 
 body {
   margin: 0;
